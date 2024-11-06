@@ -1,0 +1,31 @@
+{% for p in products %}
+<div class="col-lg-4 col-md-6 col-sm-6">
+    <div class="main__product__item">
+        <a href="{% url 'core:products-detail' p.pid %}">
+            <div class="main__product__item__pic set-bg">
+                <img src="{{ p.image.url }}" alt="">
+                {% if p.get_percentage > 0 %}
+                <div class="main__product__percent">-{{ p.get_percentage|floatformat:0 }}%</div>
+                {% endif %}
+            </div>
+        </a>
+        <div class="main__product__item__text">
+            <span>{{ p.category.title }}</span>
+            <h5><a href="{% url 'core:products-detail' p.pid %}">{{ p.title }}</a></h5>
+            <span style="display: none" class="current-product-price-{{ p.id }}">{{ p.price }}</span>
+
+            {% if user.is_authenticated %}
+                {% if user.user_type == 'student' %}
+                    <div class="product__item__price">R{{ p.price * 0.9 }} <span>R{{ p.price }}</span></div>  <!-- 10% discount for students -->
+                {% elif user.user_type == 'staff' %}
+                    <div class="product__item__price">R{{ p.price * 0.85 }} <span>R{{ p.price }}</span></div>  <!-- 15% discount for staff -->
+                {% else %}
+                    <div class="product__item__price">R{{ p.price }}</div>
+                {% endif %}
+            {% else %}
+                <div class="product__item__price">R{{ p.price }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}

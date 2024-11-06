@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Notification</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Notification</h1>
+        
+        <p>Your payment notification has been received.</p>
+        
+        <!-- Additional Info: You can use context data if you want to pass in any messages -->
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+
+        <p>If you have any issues or did not initiate this payment, please contact support.</p>
+        
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+</body>
+</html>

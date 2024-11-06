@@ -1,0 +1,40 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+<h2 style="text-align: center;">Your Orders</h2>
+
+{% if orders %}
+<table style="width: 50%; margin: 0 auto; border-collapse: collapse; text-align: center; font-family: Arial, sans-serif;">
+    <thead>
+        <tr>
+            <th style="background-color:  #323753; border: 1px solid #ccc; padding: 12px; font-weight: bold; color: #ffffff;">Order ID</th>
+            <th style="background-color:  #323753; border: 1px solid #ccc; padding: 12px; font-weight: bold; color: #ffffff;">Quantity</th>
+            <th style="background-color:  #323753; border: 1px solid #ccc; padding: 12px; font-weight: bold; color: #ffffff;">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr onclick="window.location.href='{% url 'core:order_detail' order.id %}';" style="cursor: pointer;" 
+            onmouseover="this.style.backgroundColor='#f0f8ff';" 
+            onmouseout="this.style.backgroundColor='';">
+            <td style="border: 1px solid #ccc; padding: 12px;">{{ order.order_number }}</td>
+            <td style="border: 1px solid #ccc; padding: 12px;">
+                {% for item in order.items.all %}
+                    {{ item.qty }}
+                {% empty %}
+                    <p style="margin: 0;">No quantity</p>
+                {% endfor %}
+            </td>
+            <td style="border: 1px solid #ccc; padding: 12px;">{{ order.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="border: 1px solid #ccc; padding: 12px; text-align: center;">No orders found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align: center;">You need to log in to view your orders.</p>
+{% endif %}
+{% endblock %}

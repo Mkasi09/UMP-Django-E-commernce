@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+<!-- Bootstrap & jQuery CDN for modal -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% block title %}Payment Canceled{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Payment Canceled</h1>
+    <p>{{ message }}</p>
+    <a class="btn btn-primary" href="{% url 'core:cart' %}">Return to Cart</a>
+</div>
+{% endblock content %}

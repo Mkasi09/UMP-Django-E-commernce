@@ -1,0 +1,47 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center">Order Confirmation</h2>
+        <div class="order-details mt-4">
+            <h4>Order Number: {{ order.invoice_no }}</h4>
+            <h5>Your Order Items:</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.item }}</td>
+                        <td>R {{ item.price|floatformat:2 }}</td>
+                        <td>{{ item.qty }}</td>
+                        <td>R {{ item.total|floatformat:2 }}</td> <!-- Use calculated total -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h5>Order Summary:</h5>
+            <ul class="list-unstyled">
+                <li>Subtotal: R{{ subtotal|floatformat:2 }}</li>
+                <li><strong>Total Amount: R{{ subtotal|floatformat:2 }}</strong></li>
+            </ul>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'core:index' %}" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}

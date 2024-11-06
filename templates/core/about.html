@@ -1,0 +1,54 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock title %}
+
+{% block content %}
+{% include 'partials/hero-section.html' %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="{% static 'assets/img/breadcrumbscover.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>About Us</h2>
+                    <div class="breadcrumb__option">
+                        <a href="{% url 'core:index' %}">Home</a>
+                        <span class="breadcrumb__separator"><i class="fa fa-angle-right"></i></span>
+                        <span>About Us</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- About Us Section Begin -->
+<section class="about-us spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="about__pic">
+                    <img src="{% static 'assets/img/MerchAbout.svg' %}" alt="Ump Merch">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="about__text">
+                    <div class="section-title">
+                        <span>About Ump Merch</span>
+                        <h2>Celebrating Team Spirit and Cherished Memories</h2>
+                    </div>
+                    <p>At Ump Merch, we are dedicated to bringing you the finest selection of supporter kits and memorabilia. Our mission is to provide high-quality, stylish, and meaningful merchandise that lets you proudly support your favorite teams and cherish the memories of your beloved institution.</p>
+                    <p>From branded USBs and keyrings to graduation frames and more, we offer a wide range of products that cater to all your needs. Whether you are looking for practical items or keepsakes to commemorate special moments, Ump Merch has something for everyone.</p> 
+                    <p>We believe in the power of community and the bonds formed through shared experiences. Our carefully curated collection includes a variety of supporter kits, apparel, and memorabilia, all designed to help you show your team spirit and keep the memories alive.</p>
+                    <p>Join us on our journey to celebrate and honor the teams and institutions that have shaped us. Thank you for supporting Ump Merch and being a part of our community.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Us Section End -->
+
+{% endblock content %}

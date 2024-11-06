@@ -1,0 +1,11 @@
+<!-- core/order_confirmation_email.html -->
+<h1>Order Confirmation</h1>
+<p>Thank you for your purchase, {{ user.username }}!</p>
+<p>Order Details:</p>
+<ul>
+    {% for item in items %}
+        <li>{{ item.item }} - Quantity: {{ item.qty }} - Price: R {{ item.total|floatformat:2 }}</li>
+    {% endfor %}
+</ul>
+<p>Total: R{{ subtotal|floatformat:2 }}</p>
+<p>We hope you enjoy your purchase!</p>

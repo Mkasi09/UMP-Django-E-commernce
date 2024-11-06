@@ -1,0 +1,169 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Products{% endblock title %}
+
+{% block content %}
+{% include 'partials/hero-section.html' %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="{% static 'assets/img/breadcrumbscover.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Products</h2>
+                    <div class="breadcrumb__option">
+                        <a href="{% url 'core:index' %}">Home</a>
+                        <span class="breadcrumb__separator"><i class="fa fa-angle-right"></i></span>
+                        <span>Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad"> 
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>By Categories</h4>
+                        {% for c in categories %}
+                        <ul>
+                            <li>
+                                <div class="checkbox-wrapper-2">
+                                    <input type="checkbox" class="filter-checkbox ikxBAC" data-filter="category" id="checkBox1" value="{{ c.id }}">&nbsp;&nbsp;
+                                    {{c.title}}
+                                </div>
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>Price</h4>
+                        <div class="price-range-wrap">
+                            <input type="range" name="" value="{{ min_max_price.price__max }}" id="range" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" oninput="max_price.value=this.value">
+                            <div class="price-container">
+                                <strong>R{{ min_max_price.price__min|floatformat:2 }}</strong>
+                                <strong>R{{ min_max_price.price__max|floatformat:2 }}</strong>
+                            </div>
+                            <input class="price-range-input" type="text" name="" value="{{ min_max_price.price__max|floatformat:2 }}" id="max_price" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" placeholder="Current Price" onkeyup="range.value=this.value">
+                            <button class="button-68" id="price-filter-btn" type="button"><strong>Filter By Price</strong></button>
+                        </div>
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>By Vendors</h4>
+                        {% for v in vendors %}
+                        <ul>
+                            <li>
+                                <div class="checkbox-wrapper-2">
+                                    <input type="checkbox" class="filter-checkbox ikxBAC" data-filter="vendor" id="checkBox2" value="{{ v.id }}">&nbsp;&nbsp;
+                                    {{v.title}}
+                                </div>
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                    <div class="sidebar__item">
+                        <div class="latest-product__text">
+                            <h4>Latest Products</h4>
+                            <div class="latest-product__slider owl-carousel">
+                                <div class="latest-prdouct__slider__item">
+                                    {% for p in latest_products|slice:":3" %}
+                                    <a href="{% url 'core:products-detail' p.pid %}" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{p.image.url}}" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{p.title}}</h6>
+
+                                            {% if user.user_type == "student" %}
+                                                <span>R{{p.student_price}}</span>
+                                            {% elif user.user_type == "staff" %}
+                                                <span>R{{p.staff_price}}</span>
+                                            {% else %}
+                                                <span>R{{p.price}}</span>
+                                            {% endif %}      
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7">
+                <div class="product__discount">
+                    <div class="section-title product__discount__title">
+                        <h2>Sale Off</h2>
+                    </div>
+                    <div class="row">
+                        <div class="product__discount__slider owl-carousel">
+
+                            {% for p in products %}
+                            {% if p.get_percentage %}
+
+                            <div class="col-lg-4">
+                                <div class="product__discount__item">
+                                    <a href="{% url 'core:products-detail' p.pid %}">
+                                        <div class="product__discount__item__pic set-bg"
+                                            data-setbg="{{p.image.url}}">
+                                            <div class="product__discount__percent">-{{p.get_percentage|floatformat:0}}%</div>
+                                        </div>
+                                    </a>
+                                    <div class="product__discount__item__text">
+                                        <span>{{p.category.title}}</span>
+                                        <h5><a href="{% url 'core:products-detail' p.pid %}">{{p.title}}</a></h5>            
+                                        {% if user.user_type == "student" %}
+                                            <div class="product__item__price">R{{p.student_price}} <span>R{{p.old_price}}</span></div>
+                                        {% elif user.user_type == "staff" %}
+                                            <div class="product__item__price">R{{p.staff_price}} <span>R{{p.old_price}}</span></div>
+                                        {% else %}
+                                            <div class="product__item__price">R{{p.price}} <span>R{{p.old_price}}</span></div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="filtered-product">
+                    {% for p in products %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="main__product__item">
+                            <a href="{% url 'core:products-detail' p.pid %}">
+                                <div class="main__product__item__pic set-bg"
+                                    data-setbg="{{p.image.url}}">
+                                </div>
+                            </a>
+                            <div class="main__product__item__text">
+                                <h5><a href="{% url 'core:products-detail' p.pid %}">{{p.title}}</a></h5>
+                                {% if user.user_type == "student" %}
+                                    <div class="main__product__item__price">R{{p.student_price}}</div>
+                                {% elif user.user_type == "staff" %}
+                                    <div class="main__product__item__price">R{{p.staff_price}}</div>
+                                {% else %}
+                                    <div class="main__product__item__price">R{{p.price}}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+
+{% endblock content %}
