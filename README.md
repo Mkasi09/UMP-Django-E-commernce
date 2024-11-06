@@ -40,7 +40,7 @@ This is a Django-based e-commerce application that provides a seamless shopping 
 
 1. **Clone the Repository**:
    - ```bash
-     git clone https://github.com/yourusername/ecommerce-app.git
+     git clone https://github.com/Mkasi09/UMP-Django-E-commernce.git
      cd ecommerce-app
      ```
 
